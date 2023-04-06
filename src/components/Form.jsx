@@ -14,10 +14,13 @@ class Form extends React.Component {
       cardRare,
       cardTrunfo,
       isSaveButtonDisabled,
-      onSaveButtonClick } = this.props;
+      onSaveButtonClick,
+    } = this.props;
+
     return (
       <form>
-        <label>
+        <label htmlFor="name-input">
+          Nome
           <input
             data-testid="name-input"
             value={ cardName }
@@ -26,7 +29,8 @@ class Form extends React.Component {
           />
         </label>
 
-        <label>
+        <label htmlFor="description-input">
+          Descrição
           <textarea
             data-testid="description-input"
             value={ cardDescription }
@@ -36,7 +40,7 @@ class Form extends React.Component {
           />
         </label>
 
-        <label>
+        <label htmlFor="attr1-input">
           Atributo 1
           <input
             data-testid="attr1-input"
@@ -46,7 +50,8 @@ class Form extends React.Component {
           />
         </label>
 
-        <label>
+        <label htmlFor="attr2-input">
+          Atributo 2
           <input
             data-testid="attr2-input"
             value={ cardAttr2 }
@@ -55,7 +60,8 @@ class Form extends React.Component {
           />
         </label>
 
-        <label>
+        <label htmlFor="attr3-input">
+          Atributo 3
           <input
             data-testid="attr3-input"
             value={ cardAttr3 }
@@ -64,7 +70,7 @@ class Form extends React.Component {
           />
         </label>
 
-        <label>
+        <label htmlFor="image-input">
           <input
             data-testid="image-input"
             value={ cardImage }
@@ -73,7 +79,7 @@ class Form extends React.Component {
           />
         </label>
 
-        <label>
+        <label htmlFor="rare-input">
           <select
             data-testid="rare-input"
             value={ cardRare }
@@ -85,7 +91,7 @@ class Form extends React.Component {
           </select>
         </label>
 
-        <label>
+        <label htmlFor="trunfo-input">
           Super Trunfo
           <input
             data-testid="trunfo-input"
