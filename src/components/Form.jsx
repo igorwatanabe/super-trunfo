@@ -50,6 +50,8 @@ class Form extends React.Component {
             id="attr1-input"
             name="cardAttr1"
             data-testid="attr1-input"
+            // min={ 0 }
+            // max={ 90 }
             value={ cardAttr1 }
             onChange={ onInputChange }
             type="number"
@@ -62,6 +64,8 @@ class Form extends React.Component {
             id="attr2-input"
             name="cardAttr2"
             data-testid="attr2-input"
+            // min={ 0 }
+            // max={ 90 }
             value={ cardAttr2 }
             onChange={ onInputChange }
             type="number"
@@ -74,6 +78,8 @@ class Form extends React.Component {
             id="attr3-input"
             name="cardAttr3"
             data-testid="attr3-input"
+            // min={ 0 }
+            // max={ 90 }
             value={ cardAttr3 }
             onChange={ onInputChange }
             type="number"
@@ -93,10 +99,13 @@ class Form extends React.Component {
 
         <label htmlFor="rare-input">
           <select
+            id="rare-input"
+            name="cardRare"
             data-testid="rare-input"
             value={ cardRare }
             onChange={ onInputChange }
           >
+            <option value="">--Select--</option>
             <option value="normal">normal</option>
             <option value="raro">raro</option>
             <option value="muito raro">muito raro</option>
@@ -130,9 +139,9 @@ class Form extends React.Component {
 Form.propTypes = {
   cardName: PropTypes.string.isRequired,
   cardDescription: PropTypes.string.isRequired,
-  cardAttr1: PropTypes.string.isRequired,
-  cardAttr2: PropTypes.string.isRequired,
-  cardAttr3: PropTypes.string.isRequired,
+  cardAttr1: PropTypes.number.isRequired,
+  cardAttr2: PropTypes.number.isRequired,
+  cardAttr3: PropTypes.number.isRequired,
   cardImage: PropTypes.string.isRequired,
   cardRare: PropTypes.string.isRequired,
   cardTrunfo: PropTypes.bool.isRequired,
