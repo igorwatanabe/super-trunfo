@@ -27,18 +27,19 @@ class App extends React.Component {
       cardAttr3,
     } = this.state;
 
-    const tax = 90;
-    const tax2 = 210;
+    const maxAttr = 90;
+    const maxSumAttrs = 210;
+    const attr1 = parseFloat(cardAttr1);
+    const attr2 = parseFloat(cardAttr2);
+    const attr3 = parseFloat(cardAttr3);
     const valName = cardName.length > 0;
     const valImage = cardImage.length > 0;
     const valDescription = cardDescription.length > 0;
     const valRare = cardRare !== '';
-    const valAttr1 = cardAttr1 <= tax && cardAttr1 >= 0;
-    const valAttr2 = cardAttr2 <= tax && cardAttr2 >= 0;
-    const valAttr3 = cardAttr3 <= tax && cardAttr3 >= 0;
-    console.log(typeof cardAttr1);
-    console.log(cardAttr1);
-    const valSumAttrs = (parseFloat(cardAttr1) + parseFloat(cardAttr2) + parseFloat(cardAttr3)) <= tax2;
+    const valAttr1 = attr1 <= maxAttr && attr1 >= 0;
+    const valAttr2 = attr2 <= maxAttr && attr2 >= 0;
+    const valAttr3 = attr3 <= maxAttr && attr3 >= 0;
+    const valSumAttrs = attr1 + attr2 + attr3 <= maxSumAttrs;
 
     this.setState({
       isSaveButtonDisabled: !(
