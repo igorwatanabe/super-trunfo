@@ -115,6 +115,17 @@ class App extends React.Component {
     });
   };
 
+  removeCard = (name, trunfo) => {
+    const { newDeck, hasTrunfo } = this.state;
+    const deckAtualizado = newDeck.filter(({ cardName }) => cardName !== name);
+    const trunfoo = trunfo ? !hasTrunfo : hasTrunfo;
+
+    this.setState({
+      newDeck: deckAtualizado,
+      hasTrunfo: trunfoo,
+    });
+  };
+
   render() {
     const {
       cardName,
@@ -175,6 +186,12 @@ class App extends React.Component {
                   cardRare={ card.cardRare }
                   cardTrunfo={ card.cardTrunfo }
                 />
+                <button
+                  data-testid="delete-button"
+                  onClick={ () => this.removeCard(card.cardName, card.cardTrunfo) }
+                >
+                  Exluir
+                </button>
               </div>
             ))}
 
