@@ -15,6 +15,7 @@ class App extends React.Component {
     cardTrunfo: false,
     isSaveButtonDisabled: true,
     newDeck: [],
+    hasTrunfo: false,
   };
 
   validation = () => {
@@ -78,6 +79,7 @@ class App extends React.Component {
       cardTrunfo,
       isSaveButtonDisabled,
       newDeck,
+      hasTrunfo,
     } = this.state;
 
     const newCard = {
@@ -90,7 +92,14 @@ class App extends React.Component {
       cardRare,
       cardTrunfo,
       isSaveButtonDisabled,
+      hasTrunfo,
     };
+
+    if (cardTrunfo) {
+      this.setState({
+        hasTrunfo: cardTrunfo,
+      });
+    }
 
     this.setState({
       cardName: '',
@@ -118,6 +127,7 @@ class App extends React.Component {
       cardTrunfo,
       isSaveButtonDisabled,
       newDeck,
+      hasTrunfo,
     } = this.state;
 
     return (
@@ -136,6 +146,7 @@ class App extends React.Component {
             onInputChange={ this.onInputChange }
             isSaveButtonDisabled={ isSaveButtonDisabled }
             onSaveButtonClick={ this.onSaveButtonClick }
+            hasTrunfo={ hasTrunfo }
           />
         </fieldset>
         <fieldset>
@@ -153,7 +164,7 @@ class App extends React.Component {
         <fieldset>
           <div>
             { newDeck.map((card) => (
-              <div key={ card.name }>
+              <div key={ Math.random() }>
                 <Card
                   cardName={ card.cardName }
                   cardDescription={ card.cardDescription }
