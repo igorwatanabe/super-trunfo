@@ -17,6 +17,7 @@ class App extends React.Component {
     newDeck: [],
     hasTrunfo: false,
     nameFilter: '',
+    rareFilter: 'todas',
   };
 
   validation = () => {
@@ -141,6 +142,7 @@ class App extends React.Component {
       newDeck,
       hasTrunfo,
       nameFilter,
+      rareFilter,
     } = this.state;
 
     // console.log(nameFilter);
@@ -176,25 +178,44 @@ class App extends React.Component {
             cardTrunfo={ cardTrunfo }
           />
         </fieldset>
+
         <fieldset>
-          <div>
-            <label htmlFor="name-filter">
-              Filtrar por nome:
-              <input
-                id="name-filter"
-                name="nameFilter"
-                data-testid="name-filter"
-                value={ nameFilter }
-                onChange={ this.onInputChange }
-                type="text"
-              />
-            </label>
-          </div>
+          <label htmlFor="name-filter">
+            Filtrar por nome:
+            <input
+              id="name-filter"
+              name="nameFilter"
+              data-testid="name-filter"
+              value={ nameFilter }
+              onChange={ this.onInputChange }
+              type="text"
+            />
+          </label>
+          <label htmlFor="rare-filter">
+            Filtrar por raridade:
+            <select
+              id="rare-filter"
+              name="rareFilter"
+              data-testid="rare-filter"
+              value={ rareFilter }
+              onChange={ this.onInputChange }
+            >
+              <option value="todas">todas</option>
+              <option value="normal">normal</option>
+              <option value="raro">raro</option>
+              <option value="muito raro">muito raro</option>
+            </select>
+          </label>
         </fieldset>
+
         <fieldset>
           <div>
             { newDeck
               .filter((card) => card.cardName.includes(nameFilter))
+              .filter((card) => {
+                if (rareFilter === 'todas') return true;
+                return card.cardRare === rareFilter;
+              })
               .map((card) => (
                 <div key={ Math.random() }>
                   <Card
