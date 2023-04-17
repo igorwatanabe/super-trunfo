@@ -16,6 +16,7 @@ class App extends React.Component {
     isSaveButtonDisabled: true,
     newDeck: [],
     hasTrunfo: false,
+    nameFilter: '',
   };
 
   validation = () => {
@@ -139,7 +140,10 @@ class App extends React.Component {
       isSaveButtonDisabled,
       newDeck,
       hasTrunfo,
+      nameFilter,
     } = this.state;
+
+    // console.log(nameFilter);
 
     return (
       <>
@@ -174,26 +178,43 @@ class App extends React.Component {
         </fieldset>
         <fieldset>
           <div>
-            { newDeck.map((card) => (
-              <div key={ Math.random() }>
-                <Card
-                  cardName={ card.cardName }
-                  cardDescription={ card.cardDescription }
-                  cardAttr1={ card.cardAttr1 }
-                  cardAttr2={ card.cardAttr2 }
-                  cardAttr3={ card.cardAttr3 }
-                  cardImage={ card.cardImage }
-                  cardRare={ card.cardRare }
-                  cardTrunfo={ card.cardTrunfo }
-                />
-                <button
-                  data-testid="delete-button"
-                  onClick={ () => this.removeCard(card.cardName, card.cardTrunfo) }
-                >
-                  Exluir
-                </button>
-              </div>
-            ))}
+            <label htmlFor="name-filter">
+              Filtrar por nome:
+              <input
+                id="name-filter"
+                name="nameFilter"
+                data-testid="name-filter"
+                value={ nameFilter }
+                onChange={ this.onInputChange }
+                type="text"
+              />
+            </label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div>
+            { newDeck
+              .filter((card) => card.cardName.includes(nameFilter))
+              .map((card) => (
+                <div key={ Math.random() }>
+                  <Card
+                    cardName={ card.cardName }
+                    cardDescription={ card.cardDescription }
+                    cardAttr1={ card.cardAttr1 }
+                    cardAttr2={ card.cardAttr2 }
+                    cardAttr3={ card.cardAttr3 }
+                    cardImage={ card.cardImage }
+                    cardRare={ card.cardRare }
+                    cardTrunfo={ card.cardTrunfo }
+                  />
+                  <button
+                    data-testid="delete-button"
+                    onClick={ () => this.removeCard(card.cardName, card.cardTrunfo) }
+                  >
+                    Exluir
+                  </button>
+                </div>
+              ))}
 
           </div>
         </fieldset>
