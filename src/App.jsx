@@ -18,6 +18,7 @@ class App extends React.Component {
     hasTrunfo: false,
     nameFilter: '',
     rareFilter: 'todas',
+    trunfoFilter: false,
   };
 
   validation = () => {
@@ -120,11 +121,11 @@ class App extends React.Component {
   removeCard = (name, trunfo) => {
     const { newDeck, hasTrunfo } = this.state;
     const deckAtualizado = newDeck.filter(({ cardName }) => cardName !== name);
-    const trunfoo = trunfo ? !hasTrunfo : hasTrunfo;
+    const trunfoCard = trunfo ? !hasTrunfo : hasTrunfo;
 
     this.setState({
       newDeck: deckAtualizado,
-      hasTrunfo: trunfoo,
+      hasTrunfo: trunfoCard,
     });
   };
 
@@ -143,105 +144,105 @@ class App extends React.Component {
       hasTrunfo,
       nameFilter,
       rareFilter,
+      trunfoFilter,
     } = this.state;
-
-    // console.log(nameFilter);
-
     return (
       <>
-        <fieldset>
-          <h1>ADICIONE NOVA CARTA</h1>
-          <Form
-            cardName={ cardName }
-            cardDescription={ cardDescription }
-            cardAttr1={ cardAttr1 }
-            cardAttr2={ cardAttr2 }
-            cardAttr3={ cardAttr3 }
-            cardImage={ cardImage }
-            cardRare={ cardRare }
-            cardTrunfo={ cardTrunfo }
-            onInputChange={ this.onInputChange }
-            isSaveButtonDisabled={ isSaveButtonDisabled }
-            onSaveButtonClick={ this.onSaveButtonClick }
-            hasTrunfo={ hasTrunfo }
+        <h1>ADICIONE NOVA CARTA</h1>
+        <Form
+          cardName={ cardName }
+          cardDescription={ cardDescription }
+          cardAttr1={ cardAttr1 }
+          cardAttr2={ cardAttr2 }
+          cardAttr3={ cardAttr3 }
+          cardImage={ cardImage }
+          cardRare={ cardRare }
+          cardTrunfo={ cardTrunfo }
+          onInputChange={ this.onInputChange }
+          isSaveButtonDisabled={ isSaveButtonDisabled }
+          onSaveButtonClick={ this.onSaveButtonClick }
+          hasTrunfo={ hasTrunfo }
+        />
+        <Card
+          cardName={ cardName }
+          cardDescription={ cardDescription }
+          cardAttr1={ cardAttr1 }
+          cardAttr2={ cardAttr2 }
+          cardAttr3={ cardAttr3 }
+          cardImage={ cardImage }
+          cardRare={ cardRare }
+          cardTrunfo={ cardTrunfo }
+        />
+        <label htmlFor="name-filter">
+          Filtrar por nome:
+          <input
+            name="nameFilter"
+            data-testid="name-filter"
+            value={ nameFilter }
+            onChange={ this.onInputChange }
+            type="text"
+            disabled={ trunfoFilter }
           />
-        </fieldset>
-        <fieldset>
-          <Card
-            cardName={ cardName }
-            cardDescription={ cardDescription }
-            cardAttr1={ cardAttr1 }
-            cardAttr2={ cardAttr2 }
-            cardAttr3={ cardAttr3 }
-            cardImage={ cardImage }
-            cardRare={ cardRare }
-            cardTrunfo={ cardTrunfo }
+        </label>
+        <label htmlFor="rare-filter">
+          Filtrar por raridade:
+          <select
+            name="rareFilter"
+            data-testid="rare-filter"
+            value={ rareFilter }
+            onChange={ this.onInputChange }
+            disabled={ trunfoFilter }
+          >
+            <option value="todas">todas</option>
+            <option value="normal">normal</option>
+            <option value="raro">raro</option>
+            <option value="muito raro">muito raro</option>
+          </select>
+        </label>
+        <label htmlFor="trunfo-filter">
+          Filtro Super Trunfo
+          <input
+            name="trunfoFilter"
+            data-testid="trunfo-filter"
+            type="checkbox"
+            checked={ trunfoFilter }
+            onChange={ this.onInputChange }
           />
-        </fieldset>
-
-        <fieldset>
-          <label htmlFor="name-filter">
-            Filtrar por nome:
-            <input
-              id="name-filter"
-              name="nameFilter"
-              data-testid="name-filter"
-              value={ nameFilter }
-              onChange={ this.onInputChange }
-              type="text"
-            />
-          </label>
-          <label htmlFor="rare-filter">
-            Filtrar por raridade:
-            <select
-              id="rare-filter"
-              name="rareFilter"
-              data-testid="rare-filter"
-              value={ rareFilter }
-              onChange={ this.onInputChange }
-            >
-              <option value="todas">todas</option>
-              <option value="normal">normal</option>
-              <option value="raro">raro</option>
-              <option value="muito raro">muito raro</option>
-            </select>
-          </label>
-        </fieldset>
-
-        <fieldset>
-          <div>
-            { newDeck
-              .filter((card) => card.cardName.includes(nameFilter))
-              .filter((card) => {
-                if (rareFilter === 'todas') return true;
-                return card.cardRare === rareFilter;
-              })
-              .map((card) => (
-                <div key={ Math.random() }>
-                  <Card
-                    cardName={ card.cardName }
-                    cardDescription={ card.cardDescription }
-                    cardAttr1={ card.cardAttr1 }
-                    cardAttr2={ card.cardAttr2 }
-                    cardAttr3={ card.cardAttr3 }
-                    cardImage={ card.cardImage }
-                    cardRare={ card.cardRare }
-                    cardTrunfo={ card.cardTrunfo }
-                  />
-                  <button
-                    data-testid="delete-button"
-                    onClick={ () => this.removeCard(card.cardName, card.cardTrunfo) }
-                  >
-                    Exluir
-                  </button>
-                </div>
-              ))}
-
-          </div>
-        </fieldset>
+        </label>
+        <div>
+          { newDeck
+            .filter((card) => card.cardName.includes(nameFilter))
+            .filter((card) => {
+              if (rareFilter === 'todas') return true;
+              return card.cardRare === rareFilter;
+            })
+            .filter((card) => {
+              if (trunfoFilter) return card.cardTrunfo === trunfoFilter;
+              return true;
+            })
+            .map((card) => (
+              <div key={ Math.random() }>
+                <Card
+                  cardName={ card.cardName }
+                  cardDescription={ card.cardDescription }
+                  cardAttr1={ card.cardAttr1 }
+                  cardAttr2={ card.cardAttr2 }
+                  cardAttr3={ card.cardAttr3 }
+                  cardImage={ card.cardImage }
+                  cardRare={ card.cardRare }
+                  cardTrunfo={ card.cardTrunfo }
+                />
+                <button
+                  data-testid="delete-button"
+                  onClick={ () => this.removeCard(card.cardName, card.cardTrunfo) }
+                >
+                  Exluir
+                </button>
+              </div>
+            ))}
+        </div>
       </>
     );
   }
 }
-
 export default App;
